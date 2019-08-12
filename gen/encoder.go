@@ -341,7 +341,7 @@ func (g *Generator) genStructFieldEncoder(t reflect.Type, f reflect.StructField,
 	return toggleFirstCondition, nil
 }
 
-func (g *Generator) genStructExtraFieldsEncoder(structType reflect.Type, extraField reflect.StructField, fields []reflect.StructField) {
+func (g *Generator) genStructExtraFieldsEncoder(structType reflect.Type, extraField reflect.StructField, fields []reflect.StructField, firstCondition bool) {
 	fmt.Fprintln(g.out, "  for k, v := range in."+extraField.Name+" {")
 
 	// check non-overlapping key
@@ -358,11 +358,16 @@ func (g *Generator) genStructExtraFieldsEncoder(structType reflect.Type, extraFi
 	fmt.Fprintln(g.out, "    }")
 
 	// print key
-	fmt.Fprintln(g.out, "    if first {")
-	fmt.Fprintln(g.out, "      first = false")
-	fmt.Fprintln(g.out, "    } else {")
-	fmt.Fprintln(g.out, "      out.RawByte(',')")
-	fmt.Fprintln(g.out, "    }")
+	if firstCondition {
+		fmt.Fprintln(g.out, "    if first {")
+		fmt.Fprintln(g.out, "      first = false")
+		fmt.Fprintln(g.out, "    } else {")
+		fmt.Fprintln(g.out, "      out.RawByte(',')")
+		fmt.Fprintln(g.out, "    }")
+	} else {
+		fmt.Fprintln(g.out, "      out.RawByte(',')")
+	}
+
 	fmt.Fprintln(g.out, "    out.String(string(k))")
 	fmt.Fprintln(g.out, "    out.RawByte(':')")
 
@@ -434,7 +439,7 @@ func (g *Generator) genStructEncoder(t reflect.Type) error {
 	}
 
 	if extraField != nil {
-		g.genStructExtraFieldsEncoder(t, *extraField, fs)
+		g.genStructExtraFieldsEncoder(t, *extraField, fs, firstCondition)
 	}
 
 	fmt.Fprintln(g.out, "  out.RawByte('}')")
