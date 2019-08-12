@@ -8,12 +8,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mailru/easyjson/bootstrap"
+	"github.com/getstream/easyjson/bootstrap"
 	// Reference the gen package to be friendly to vendoring tools,
 	// as it is an indirect dependency.
 	// (The temporary bootstrapping code uses it.)
-	_ "github.com/mailru/easyjson/gen"
-	"github.com/mailru/easyjson/parser"
+	_ "github.com/getstream/easyjson/gen"
+	"github.com/getstream/easyjson/parser"
 )
 
 var buildTags = flag.String("build_tags", "", "build tags to add to generated file")
