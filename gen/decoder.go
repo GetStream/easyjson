@@ -386,7 +386,7 @@ func getStructFields(t reflect.Type) (fields []reflect.StructField, extra *refle
 			continue
 		}
 
-		if f.Anonymous && tags.name == "" {
+		if (f.Anonymous && tags.name == "") || tags.omit {
 			continue
 		}
 
