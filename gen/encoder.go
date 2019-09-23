@@ -347,11 +347,19 @@ func (g *Generator) genStructExtraFieldsEncoder(structType reflect.Type, extraFi
 	// check non-overlapping key
 	fmt.Fprintln(g.out, "    switch k {")
 	fmt.Fprint(g.out, "    case ")
-	for i, f := range fields {
-		if i != 0 {
+	var first = true
+	for _, f := range fields {
+		tags := parseFieldTags(f)
+		if tags.omit {
+			continue
+		}
+
+		if !first {
 			fmt.Fprint(g.out, ", ")
 		}
 		fmt.Fprintf(g.out, "%q", g.fieldNamer.GetJSONFieldName(structType, f))
+
+		first = false
 	}
 	fmt.Fprintln(g.out, ":")
 	fmt.Fprintln(g.out, "      continue // don't allow field overwrites")
