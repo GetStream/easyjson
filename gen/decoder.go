@@ -467,6 +467,13 @@ func (g *Generator) genStructDecoder(t reflect.Type) error {
 		g.genRequiredFieldSet(t, f)
 	}
 
+	if extraField != nil {
+		// reset value; compiler optimises remove all
+		fmt.Fprintln(g.out, "    for key := range out."+extraField.Name+" {")
+		fmt.Fprintln(g.out, "      delete(out."+extraField.Name+", key)")
+		fmt.Fprintln(g.out, "    }")
+	}
+
 	fmt.Fprintln(g.out, "  in.Delim('{')")
 	fmt.Fprintln(g.out, "  for !in.IsDelim('}') {")
 	fmt.Fprintln(g.out, "    key := in.UnsafeString()")
@@ -476,13 +483,6 @@ func (g *Generator) genStructDecoder(t reflect.Type) error {
 	fmt.Fprintln(g.out, "       in.WantComma()")
 	fmt.Fprintln(g.out, "       continue")
 	fmt.Fprintln(g.out, "    }")
-
-	if extraField != nil {
-		// reset value; compiler optimises remove all
-		fmt.Fprintln(g.out, "    for key := range out."+extraField.Name+" {")
-		fmt.Fprintln(g.out, "      delete(out."+extraField.Name+", key)")
-		fmt.Fprintln(g.out, "    }")
-	}
 
 	fmt.Fprintln(g.out, "    switch key {")
 	for _, f := range fs {
