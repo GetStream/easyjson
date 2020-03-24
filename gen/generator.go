@@ -13,9 +13,9 @@ import (
 	"unicode"
 )
 
-const pkgWriter = "github.com/getstream/easyjson/jwriter"
-const pkgLexer = "github.com/getstream/easyjson/jlexer"
-const pkgEasyJSON = "github.com/getstream/easyjson"
+const pkgWriter = "github.com/GetStream/easyjson/jwriter"
+const pkgLexer = "github.com/GetStream/easyjson/jlexer"
+const pkgEasyJSON = "github.com/GetStream/easyjson"
 
 // FieldNamer defines a policy for generating names for struct fields.
 type FieldNamer interface {
