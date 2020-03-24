@@ -1,8 +1,8 @@
 package easyjson
 
 import (
-	"github.com/getstream/easyjson/jlexer"
-	"github.com/getstream/easyjson/jwriter"
+	"github.com/GetStream/easyjson/jlexer"
+	"github.com/GetStream/easyjson/jwriter"
 )
 
 // RawMessage is a raw piece of JSON (number, string, bool, object, array or

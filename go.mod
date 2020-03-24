@@ -1,4 +1,4 @@
-module github.com/getstream/easyjson
+module github.com/GetStream/easyjson
 
 go 1.12
 

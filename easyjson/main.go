@@ -8,12 +8,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/getstream/easyjson/bootstrap"
+	"github.com/GetStream/easyjson/bootstrap"
 	// Reference the gen package to be friendly to vendoring tools,
 	// as it is an indirect dependency.
 	// (The temporary bootstrapping code uses it.)
-	_ "github.com/getstream/easyjson/gen"
-	"github.com/getstream/easyjson/parser"
+	_ "github.com/GetStream/easyjson/gen"
+	"github.com/GetStream/easyjson/parser"
 )
 
 var buildTags = flag.String("build_tags", "", "build tags to add to generated file")
